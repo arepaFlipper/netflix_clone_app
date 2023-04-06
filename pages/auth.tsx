@@ -29,10 +29,21 @@ const Auth = () => {
                 <Input id="email" label="Email" type="email" onChange={(ev: React.BaseSyntheticEvent) => setEmail(ev.target.value)} value={email} />
               )}
               <Input id="password" label="Password" type="password" onChange={(ev: React.BaseSyntheticEvent) => setPassword(ev.target.value)} value={password} />
-              <button className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition">Login</button>
+              <button className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition">{(variant === 'login' ? 'Login' : 'Sign up')}</button>
               <p className="text-neutral-500 mt-12">
-                First time visiting my Netflix clone?<br />
-                <span onClick={toggleVariant} className="text-white ml-1 hover:underline cursor-pointer">Create an account</span>
+                {
+                  (variant === 'login') ? (
+                    <>
+                      First time visiting my Netflix clone?<br />
+                      <span onClick={toggleVariant} className="text-white ml-1 hover:underline cursor-pointer">Create an account</span>
+                    </>
+                  ) : (
+                    <>
+                      Already have an account?<br />
+                      Sign in <span onClick={toggleVariant} className="text-white ml-1 hover:underline cursor-pointer">HERE</span>
+                    </>
+                  )
+                }
               </p>
             </div>
           </div>
