@@ -5,11 +5,10 @@ const Auth = () => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
-  const [variant, setVariant] = useState('login');
+  const [isLogin, setIsLogin] = useState(true);
   const toggleVariant = useCallback(() => {
-    setVariant((currentVariant) => {
-      const label = (currentVariant === 'login') ? 'register' : 'login';
-      return label;
+    setIsLogin((currentVariant) => {
+      return !currentVariant;
     })
   }, [])
   return (
@@ -21,18 +20,18 @@ const Auth = () => {
         <div className="flex justify-center">
           <div className="bg-black bg-opacity-70 px-16 py-16 self-center mt-2 lg:w-2/5 lg:max-w-md rounded-md w-full">
             <h2 className="text-white text-3xl mb-8 font-semibold">
-              {(variant === 'login') ? 'Login' : 'Sign up'}
+              {(isLogin) ? 'Login' : 'Sign up'}
             </h2>
             <div className="flex flex-col gap-4">
-              <Input id="name" label={(variant === 'login') ? "Username or Email" : "Username"} type="username" onChange={(ev: React.BaseSyntheticEvent) => setName(ev.target.value)} value={name} />
-              {variant === 'register' && (
+              <Input id="name" label={(isLogin) ? "Username or Email" : "Username"} type="username" onChange={(ev: React.BaseSyntheticEvent) => setName(ev.target.value)} value={name} />
+              {(!isLogin) && (
                 <Input id="email" label="Email" type="email" onChange={(ev: React.BaseSyntheticEvent) => setEmail(ev.target.value)} value={email} />
               )}
               <Input id="password" label="Password" type="password" onChange={(ev: React.BaseSyntheticEvent) => setPassword(ev.target.value)} value={password} />
-              <button className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition">{(variant === 'login' ? 'Login' : 'Sign up')}</button>
+              <button className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition">{(isLogin) ? 'Login' : 'Sign up'}</button>
               <p className="text-neutral-500 mt-12">
                 {
-                  (variant === 'login') ? (
+                  (isLogin) ? (
                     <>
                       First time visiting my Netflix clone?<br />
                       <span onClick={toggleVariant} className="text-white ml-1 hover:underline cursor-pointer">Create an account</span>
