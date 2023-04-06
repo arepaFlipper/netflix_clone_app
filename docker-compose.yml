@@ -3,10 +3,9 @@ services:
   mongo:
     container_name: mongo
     restart: always
-    image: mongo:latest
     build:
       context: .
-      dockerfile: Dockerfile
+      # dockerfile: Dockerfile
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
@@ -18,6 +17,8 @@ services:
       - 27017-27023:27017-27023
     # volumes:
     #   - mongodb_data_container2:/data/db
+    # command: --servicesExecutor adaptive
+    command: ["/usr/bin/mongod", "--bind_ip_all", "--replSet", "dbrs"]
 
   mongo-express:
     container_name: mongo_express
@@ -30,6 +31,8 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
       ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
 
+volumes:
+  mongodb_data_container2:
 networks:
   mongo-network:
     driver: bridge
