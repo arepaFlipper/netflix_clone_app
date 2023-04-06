@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 import axios from 'axios';
 import Input from "@/components/Input";
+import { signIn } from 'next-auth/react';
 
 const Auth = () => {
   const [email, setEmail] = useState('');
@@ -21,6 +22,14 @@ const Auth = () => {
     }
   }, [email, name, password]);
 
+  const login = useCallback(async () => {
+
+    try {
+      const response = await signIn('credentials', { email, password, redirect: false, callbackUrl: '/' });
+    } catch (error) {
+    }
+  }, [email, password])
+
   return (
     <div className="relative h-full w-full bg-[url('/images/hero.jpg')] bg-no-repeat bg-center bg-fixed bg-cover">
       <div className="bg-black w-full h-full lg:bg-opacity-50">
@@ -33,12 +42,12 @@ const Auth = () => {
               {(isLogin) ? 'Login' : 'Sign up'}
             </h2>
             <div className="flex flex-col gap-4">
-              <Input id="name" label={(isLogin) ? "Username or Email" : "Username"} type="username" onChange={(ev: React.BaseSyntheticEvent) => setName(ev.target.value)} value={name} />
+              <Input id="email" label={(isLogin) ? "Username or Email" : "Email"} type="email" onChange={(ev: React.BaseSyntheticEvent) => setEmail(ev.target.value)} value={email} />
               {(!isLogin) && (
-                <Input id="email" label="Email" type="email" onChange={(ev: React.BaseSyntheticEvent) => setEmail(ev.target.value)} value={email} />
+                <Input id="name" label="username" type="text" onChange={(ev: React.BaseSyntheticEvent) => setName(ev.target.value)} value={name} />
               )}
               <Input id="password" label="Password" type="password" onChange={(ev: React.BaseSyntheticEvent) => setPassword(ev.target.value)} value={password} />
-              <button onClick={register} className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition">{(isLogin) ? 'Login' : 'Sign up'}</button>
+              <button onClick={(isLogin) ? (login) : (register)} className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition">{(isLogin) ? 'Login' : 'Sign up'}</button>
               <p className="text-neutral-500 mt-12">
                 {
                   (isLogin) ? (
