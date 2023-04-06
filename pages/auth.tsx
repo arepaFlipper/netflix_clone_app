@@ -21,10 +21,10 @@ const Auth = () => {
         <div className="flex justify-center">
           <div className="bg-black bg-opacity-70 px-16 py-16 self-center mt-2 lg:w-2/5 lg:max-w-md rounded-md w-full">
             <h2 className="text-white text-3xl mb-8 font-semibold">
-              {(variant) === 'login' ? 'Login' : 'Sign up'}
+              {(variant === 'login') ? 'Login' : 'Sign up'}
             </h2>
             <div className="flex flex-col gap-4">
-              <Input id="name" label="Username" type="username" onChange={(ev: React.BaseSyntheticEvent) => setName(ev.target.value)} value={name} />
+              <Input id="name" label={(variant === 'login') ? "Username or Email" : "Username"} type="username" onChange={(ev: React.BaseSyntheticEvent) => setName(ev.target.value)} value={name} />
               {variant === 'register' && (
                 <Input id="email" label="Email" type="email" onChange={(ev: React.BaseSyntheticEvent) => setEmail(ev.target.value)} value={email} />
               )}
