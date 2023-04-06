@@ -20,11 +20,12 @@ const Auth = () => {
               <Input id="name" label="Username" type="username" onChange={(ev: React.BaseSyntheticEvent) => setName(ev.target.value)} value={name} />
               <Input id="email" label="Email" type="email" onChange={(ev: React.BaseSyntheticEvent) => setEmail(ev.target.value)} value={email} />
               <Input id="password" label="Password" type="password" onChange={(ev: React.BaseSyntheticEvent) => setPassword(ev.target.value)} value={password} />
+              <button className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition">Login</button>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 }
 
