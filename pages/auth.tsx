@@ -14,15 +14,16 @@ const Auth = () => {
     })
   }, [])
 
-  const register = useCallback(async()=>{
-
+  const register = useCallback(async () => {
+    console.log(`🔖%cauth.tsx:19 - { email, name, password}`, 'font-weight:bold; background:#56a900;color:#fff;'); //DELETEME
+    console.log({ email, name, password }); // DELETEME
     try {
-      await axios.post('/api/register',{ email, name, password});
+      await axios.post('/api/register', { email, name, password });
     } catch (error) {
-      console.log(`💤%cauth.tsx:22 - error`,'font-weight:bold; background:#5fa000;color:#fff;'); //DELETEME
+      console.log(`💤%cauth.tsx:22 - error`, 'font-weight:bold; background:#5fa000;color:#fff;'); //DELETEME
       console.log(error); // DELETEME
     }
-  },[email,name,password]);
+  }, [email, name, password]);
 
   return (
     <div className="relative h-full w-full bg-[url('/images/hero.jpg')] bg-no-repeat bg-center bg-fixed bg-cover">
@@ -41,7 +42,7 @@ const Auth = () => {
                 <Input id="email" label="Email" type="email" onChange={(ev: React.BaseSyntheticEvent) => setEmail(ev.target.value)} value={email} />
               )}
               <Input id="password" label="Password" type="password" onChange={(ev: React.BaseSyntheticEvent) => setPassword(ev.target.value)} value={password} />
-              <button onCLick={register} className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition">{(isLogin) ? 'Login' : 'Sign up'}</button>
+              <button onClick={register} className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition">{(isLogin) ? 'Login' : 'Sign up'}</button>
               <p className="text-neutral-500 mt-12">
                 {
                   (isLogin) ? (
