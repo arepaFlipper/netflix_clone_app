@@ -2,8 +2,10 @@ import { useCallback, useState } from 'react';
 import axios from 'axios';
 import Input from "@/components/Input";
 import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 const Auth = () => {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
@@ -29,16 +31,16 @@ const Auth = () => {
   const login = useCallback(async () => {
     console.log(`🛠️ %cauth.tsx:32 - email, password`, 'font-weight:bold; background:#788700;color:#fff;'); //DELETEME
     console.log(email, password); // DELETEME
-
     try {
       const response = await signIn('credentials', { email, password, redirect: false, callbackUrl: '/' });
       console.log(`📂 %cauth.tsx:33 - response`, 'font-weight:bold; background:#7a8500;color:#fff;'); //DELETEME
       console.log(response); // DELETEME
+      router.push('/')
     } catch (error) {
       console.log(`⏺️ %cauth.tsx:36 - error`, 'font-weight:bold; background:#807f00;color:#fff;'); //DELETEME
       console.log(error); // DELETEME
     }
-  }, [email, password])
+  }, [email, password, router])
 
   return (
     <div className="relative h-full w-full bg-[url('/images/hero.jpg')] bg-no-repeat bg-center bg-fixed bg-cover">
