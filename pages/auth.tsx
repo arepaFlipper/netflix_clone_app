@@ -20,7 +20,7 @@ const Auth = () => {
       await axios.post('/api/register',{ email, name, password});
     } catch (error) {
     }
-  },[]);
+  },[email,name,password]);
 
   return (
     <div className="relative h-full w-full bg-[url('/images/hero.jpg')] bg-no-repeat bg-center bg-fixed bg-cover">
@@ -39,7 +39,7 @@ const Auth = () => {
                 <Input id="email" label="Email" type="email" onChange={(ev: React.BaseSyntheticEvent) => setEmail(ev.target.value)} value={email} />
               )}
               <Input id="password" label="Password" type="password" onChange={(ev: React.BaseSyntheticEvent) => setPassword(ev.target.value)} value={password} />
-              <button className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition">{(isLogin) ? 'Login' : 'Sign up'}</button>
+              <button onCLick={register} className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition">{(isLogin) ? 'Login' : 'Sign up'}</button>
               <p className="text-neutral-500 mt-12">
                 {
                   (isLogin) ? (
