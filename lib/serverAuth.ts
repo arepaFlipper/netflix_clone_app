@@ -6,8 +6,6 @@ const serverAuth = async (req: NextApiRequest) => {
   const session = await getSession({ req });
 
   if (!session?.user?.email) {
-    console.log(`🍔%cserverAuth.ts:9 - Error`, 'font-weight:bold; background:#2fd000;color:#fff;'); //DELETEME
-    console.log('error'); // DELETEME
     throw new Error('Could not sign in ⚠️  ')
   }
 
