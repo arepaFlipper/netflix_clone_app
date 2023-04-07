@@ -17,17 +17,6 @@ const Auth = () => {
     })
   }, [])
 
-  const register = useCallback(async () => {
-    console.log(`🔖%cauth.tsx:19 - { email, name, password}`, 'font-weight:bold; background:#56a900;color:#fff;'); //DELETEME
-    console.log({ email, name, password }); // DELETEME
-    try {
-      await axios.post('/api/register', { email, name, password });
-    } catch (error) {
-      console.log(`💤%cauth.tsx:22 - error`, 'font-weight:bold; background:#5fa000;color:#fff;'); //DELETEME
-      console.log(error); // DELETEME
-    }
-  }, [email, name, password]);
-
   const login = useCallback(async () => {
     console.log(`🛠️ %cauth.tsx:32 - email, password`, 'font-weight:bold; background:#788700;color:#fff;'); //DELETEME
     console.log(email, password); // DELETEME
@@ -41,6 +30,18 @@ const Auth = () => {
       console.log(error); // DELETEME
     }
   }, [email, password, router])
+
+  const register = useCallback(async () => {
+    console.log(`🔖%cauth.tsx:19 - { email, name, password}`, 'font-weight:bold; background:#56a900;color:#fff;'); //DELETEME
+    console.log({ email, name, password }); // DELETEME
+    try {
+      await axios.post('/api/register', { email, name, password });
+      login();
+    } catch (error) {
+      console.log(`💤%cauth.tsx:22 - error`, 'font-weight:bold; background:#5fa000;color:#fff;'); //DELETEME
+      console.log(error); // DELETEME
+    }
+  }, [email, name, password, login]);
 
   return (
     <div className="relative h-full w-full bg-[url('/images/hero.jpg')] bg-no-repeat bg-center bg-fixed bg-cover">
