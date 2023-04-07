@@ -19,8 +19,6 @@ export async function getServerSideProps(context: NextPageContext) {
 
 export default function Home() {
   const { data: user } = useCurrentUser();
-  console.log(`🦞%cindex.tsx:22 - user`, 'font-weight:bold; background:#5fa000;color:#fff;'); //DELETEME
-  console.log(user); // DELETEME
   return (
     <>
       <h1 className="text-4xl text-green-500"> Netflix Clone </h1>
