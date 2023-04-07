@@ -1,5 +1,6 @@
 import { NextPageContext } from "next";
 import { getSession, signOut } from "next-auth/react";
+import useCurrentUser from '@/hooks/useCurrentUser'
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -17,9 +18,13 @@ export async function getServerSideProps(context: NextPageContext) {
 }
 
 export default function Home() {
+  const { data: user } = useCurrentUser();
+  console.log(`🦞%cindex.tsx:22 - user`, 'font-weight:bold; background:#5fa000;color:#fff;'); //DELETEME
+  console.log(user); // DELETEME
   return (
     <>
       <h1 className="text-4xl text-green-500"> Netflix Clone </h1>
+      <p className="text-white">Logged in as: {user?.name} </p>
       <button className="h-10 w-full bg-white" onClick={() => signOut()}>Logout</button>
     </>
   )
