@@ -59,8 +59,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     return res.status(405).end();
   } catch (error) {
-    console.log(`🖲️ %cfavorite.tsx:63 - error`, 'font-weight:bold; background:#a55a00;color:#fff;'); //DELETEME
-    console.log(error); // DELETEME
     return res.status(400).end();
   }
 

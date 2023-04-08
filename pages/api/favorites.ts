@@ -14,8 +14,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const favoriteMovies = await prismadb.movie.findMany(favorites_query);
     return res.status(200).json(favoriteMovies);
   } catch (error) {
-    console.log(`🆚%cfavorites.ts:18 - error`, 'font-weight:bold; background:#53ac00;color:#fff;'); //DELETEME
-    console.log(error); // DELETEME
     return res.status(400).end();
   }
 }
