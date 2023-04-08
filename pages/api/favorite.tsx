@@ -1,14 +1,16 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { without } from 'lodash';
 import prismadb from '@/lib/prismadb';
-import serverAuth from '@/lib/serverAuth';
+import serverAuth from '@/libs/serverAuth';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     if (req.method === 'POST') {
       console.log(`😧%cfavorite.tsx:9 - req`, 'font-weight:bold; background:#2fd000;color:#fff;'); //DELETEME
       console.log(req); // DELETEME
-      const { currentUser } = await serverAuth(req);
+      const { currentUser } = await serverAuth(req, res);
+      console.log(`☘️ %cfavorite.tsx:12 - res`, 'font-weight:bold; background:#3cc300;color:#fff;'); //DELETEME
+      console.log(res); // DELETEME
       const { movieId } = req.body;
       console.log(`🔒 %cfavorite.tsx:13 - movieId`, 'font-weight:bold; background:#40bf00;color:#fff;'); //DELETEME
       console.log(movieId); // DELETEME
@@ -38,7 +40,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     if (req.method === 'DELETE') {
-      const { currentUser } = await serverAuth(req);
+      const { currentUser } = await serverAuth(req, res);
       const { movieId } = req.body;
 
       const movie_query = {
