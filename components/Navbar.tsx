@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import NavbarItem from "./NavbarItem";
 import AccountMenu from "./AccountMenu";
 import { BsChevronDown, BsSearch, BsBell } from "react-icons/bs";
@@ -15,6 +15,8 @@ const Navbar = () => {
   const toggleAccountMenu = useCallback(() => {
     setShowAccountMenu((current) => !current);
   }, [])
+  useEffect(() => {
+  }, [showMobileMenu])
 
   const titles = ["Home", "Series", "Films", "New & Popular", "My List", "Browse by Language"];
   return (
@@ -30,7 +32,7 @@ const Navbar = () => {
         </div>
         <div onClick={toggleMobileMenu} className="lg:hidden flex flex-row items-center gap-2 ml-8 cursor-pointer relative">
           <p className="text-white text-sm">Browse</p>
-          <BsChevronDown className="text-white transition" />
+          <BsChevronDown className={`text-white transition ${(showMobileMenu) ? 'rotate-180' : 'rotate-0'}`} />
           <MobileMenu visible={showMobileMenu} />
         </div>
         <div className="flex flex-row ml-auto gap-7 items-center">
@@ -45,7 +47,7 @@ const Navbar = () => {
             <div className="w-6 h-6 lg:w-10 lg:h-10 rounded-md overflow-hidden">
               <img src="/images/default-blue.png" alt="" />
             </div>
-            <BsChevronDown className="text-white transition" />
+            <BsChevronDown className={`text-white transition ${(showAccountMenu) ? 'rotate-180' : 'rotate-0'}`} />
             <AccountMenu visible={showAccountMenu} />
           </div>
         </div>
