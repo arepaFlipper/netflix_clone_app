@@ -6,9 +6,16 @@ import MobileMenu from "./MobileMenu";
 
 const Navbar = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [showAccountMenu, setShowAccountMenu] = useState(false);
+
   const toggleMobileMenu = useCallback(() => {
     setShowMobileMenu((current) => !current);
   }, [])
+
+  const toggleAccountMenu = useCallback(() => {
+    setShowAccountMenu((current) => !current);
+  }, [])
+
   const titles = ["Home", "Series", "Films", "New & Popular", "My List", "Browse by Language"];
   return (
     <nav className="w-full fixed z-40">
@@ -33,12 +40,13 @@ const Navbar = () => {
           <div className="text-gray-200 hover:text-gray-300 cursor-pointer">
             <BsBell />
           </div>
-          <div className="flex flex-row items-center gap-2 cursor-pointer relative">
+
+          <div onClick={toggleAccountMenu} className="flex flex-row items-center gap-2 cursor-pointer relative">
             <div className="w-6 h-6 lg:w-10 lg:h-10 rounded-md overflow-hidden">
               <img src="/images/default-blue.png" alt="" />
             </div>
             <BsChevronDown className="text-white transition" />
-            <AccountMenu />
+            <AccountMenu visible={showAccountMenu} />
           </div>
         </div>
       </div>
