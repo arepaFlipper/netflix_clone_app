@@ -6,6 +6,7 @@ import { getSession } from "next-auth/react";
 import MovieList from "@/components/MovieList";
 import useFavorites from "@/hooks/useFavorites";
 import InfoModal from "@/components/InfoModal";
+import useInfoModal from "@/hooks/useInfoModal";
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -25,11 +26,12 @@ export async function getServerSideProps(context: NextPageContext) {
 export default function Home() {
   const { data: movies = [] } = useMovieList();
   const { data: favorites = [] } = useFavorites();
+  const { isOpen, onClose } = useInfoModal();
   console.log(`🚁%cindex.tsx:27 - favorites`, 'font-weight:bold; background:#6c9300;color:#fff;'); //DELETEME
   console.log(favorites); // DELETEME
   return (
     <>
-      <InfoModal visible onClose={() => { }} />
+      <InfoModal visible={isOpen} onClose={onClose} />
       <Navbar />
       <Billboard />
       <div className="pb-40">
