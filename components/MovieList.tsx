@@ -1,5 +1,6 @@
 import React from 'react';
 import { isEmpty } from 'lodash';
+import MovieCard from './MovieCard';
 
 interface MovieListProps {
   data: Record<string, any>[];
@@ -21,7 +22,7 @@ const MovieList: React.FC<MovieListProps> = ({ data, title }) => {
         <div className="grid grid-cols-4 gap-2">
           {data.map((movie) => {
             return (
-              <div key={movie.id} >{movie.name}</div>
+              <MovieCard key={movie.id} data={movie} />
             )
           })}
         </div>
