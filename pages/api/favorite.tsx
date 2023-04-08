@@ -6,13 +6,19 @@ import serverAuth from '@/lib/serverAuth';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     if (req.method === 'POST') {
+      console.log(`😧%cfavorite.tsx:9 - req`, 'font-weight:bold; background:#2fd000;color:#fff;'); //DELETEME
+      console.log(req); // DELETEME
       const { currentUser } = await serverAuth(req);
       const { movieId } = req.body;
+      console.log(`🔒 %cfavorite.tsx:13 - movieId`, 'font-weight:bold; background:#40bf00;color:#fff;'); //DELETEME
+      console.log(movieId); // DELETEME
+
       const movie_query = {
         where: {
           id: movieId,
         }
       }
+
       const existingMovie = await prismadb.movie.findUnique(movie_query);
       if (!existingMovie) {
         throw new Error('Invalid ID');
