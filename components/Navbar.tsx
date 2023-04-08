@@ -6,6 +6,14 @@ const Navbar = () => {
         <img className="h-4 lg:h-7" src="/images/logo.png" alt="logo" />
         <div className="flex-row ml-8 gap-7 hidden lg:flex">
           <NavbarItem label="Home" />
+          <NavbarItem label="Series" />
+          <NavbarItem label="Films" />
+          <NavbarItem label="New & Popular" />
+          <NavbarItem label="My List" />
+          <NavbarItem label="Browse by languages" />
+        </div>
+        <div className="lg:hidden flex flex-row items-center gap-2 ml-8 cursor-pointer relative">
+          <p className="text-white text-sm">Browse</p>
         </div>
       </div>
     </nav>
