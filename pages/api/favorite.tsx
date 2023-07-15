@@ -8,11 +8,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (req.method === 'POST') {
       const { currentUser } = await serverAuth(req);
       const { movieId } = req.body;
+
       const movie_query = {
         where: {
           id: movieId,
         }
       }
+
       const existingMovie = await prismadb.movie.findUnique(movie_query);
       if (!existingMovie) {
         throw new Error('Invalid ID');
