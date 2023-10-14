@@ -17,29 +17,26 @@ const Auth = () => {
     })
   }, [])
 
-  const register = useCallback(async () => {
-    try {
-      await axios.post('/api/register', { email, name, password });
-    } catch (error) {
-    }
-  }, [email, name, password]);
-
   const login = useCallback(async () => {
     try {
-      const response = await signIn('credentials', { email, password, redirect: false, callbackUrl: '/' });
-    try {
-      const response = await signIn('credentials', { email, password, redirect: false, callbackUrl: '/' });
-      router.push('/')
       const response = await signIn('credentials', { email, password, redirect: false, callbackUrl: '/profiles' });
+      console.log(`📂 %cauth.tsx:33 - response`, 'font-weight:bold; background:#7a8500;color:#fff;');
+      console.log(response);
     } catch (error) {
+      console.log(`⏺️ %cauth.tsx:36 - error`, 'font-weight:bold; background:#807f00;color:#fff;');
+      console.log(error);
     }
   }, [email, password])
 
   const register = useCallback(async () => {
+    console.log(`🔖%cauth.tsx:19 - { email, name, password}`, 'font-weight:bold; background:#56a900;color:#fff;'); //DELETEME
+    console.log({ email, name, password }); // DELETEME
     try {
       await axios.post('/api/register', { email, name, password });
       login();
     } catch (error) {
+      console.log(`💤%cauth.tsx:22 - error`, 'font-weight:bold; background:#5fa000;color:#fff;'); //DELETEME
+      console.log(error); // DELETEME
     }
   }, [email, name, password, login]);
 

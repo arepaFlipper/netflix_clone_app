@@ -6,11 +6,18 @@ import useInfoModal from '@/hooks/useInfoModal';
 
 const Billboard = () => {
   const { data } = useBillboard();
+  console.log(`🪬%cBillboard.tsx:6 - data`, 'font-weight:bold; background:#20df00;color:#fff;'); //DELETEME
+  console.log(data); // DELETEME
   const { openModal } = useInfoModal();
 
   const handleOpenModal = useCallback(() => {
     openModal(data?.id);
   }, [openModal, data?.id])
+
+  return (
+    <div className="relative h-[56.25vw]">
+      <video
+        className='w-full h-[56.25vw] object-cover brightness-[60%] transition duration-500'
         autoPlay
         muted
         loop
