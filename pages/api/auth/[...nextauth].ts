@@ -1,26 +1,20 @@
 import NextAuth, { AuthOptions } from 'next-auth';
-import Credentials from 'next-auth/providers/credentials';
-import prismadb from '@/lib/prismadb';
-import { compare } from 'bcrypt';
 import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
+import Credentials from 'next-auth/providers/credentials';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import { compare } from 'bcrypt';
+import prismadb from '@/libs/prismadb';
 
 export const authOptions: AuthOptions = {
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID || '',
       clientSecret: process.env.GITHUB_SECRET || '',
-      httpOptions: {
-        timeout: 60000
-      }
     }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || '',
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
-      httpOptions: {
-        timeout: 60000
-      }
     }),
     Credentials({
       id: 'credentials',
@@ -32,7 +26,7 @@ export const authOptions: AuthOptions = {
         },
         password: {
           label: 'Password',
-          type: 'password',
+          type: 'passord'
         }
       },
       async authorize(credentials) {
@@ -40,11 +34,9 @@ export const authOptions: AuthOptions = {
           throw new Error('Email and password required');
         }
 
-        const user = await prismadb.user.findUnique({
-          where: {
-            email: credentials.email,
-          }
-        });
+        const user = await prismadb.user.findUnique({ where: {
+          email: credentials.email
+        }});
 
         if (!user || !user.hashedPassword) {
           throw new Error('Email does not exist');
@@ -61,27 +53,16 @@ export const authOptions: AuthOptions = {
     })
   ],
   pages: {
-    signIn: '/auth',
+    signIn: '/auth'
   },
-  callbacks: {
-    async jwt({ token, user, account }) {
-
-      console.log(`⚠️ %c[...nextauth].ts:62 - user`, 'font-weight:bold; background:#a45b00;color:#fff;'); //DELETEME:
-      console.log(user); // DELETEME:
-      console.log(`🔬 %c[...nextauth].ts:64 - token`, 'font-weight:bold; background:#a65900;color:#fff;'); //DELETEME:
-      console.log(token); // DELETEME:
-      return token;
-    }
-  },
-  debug: (process.env.NODE_ENV === 'development'),
+  debug: process.env.NODE_ENV === 'development',
   adapter: PrismaAdapter(prismadb),
-  session: {
-    strategy: 'jwt',
-  },
+  session: { strategy: 'jwt' },
   jwt: {
     secret: process.env.NEXTAUTH_JWT_SECRET,
   },
-  secret: process.env.NEXTAUTH_SECRET,
-}
+  secret: process.env.NEXTAUTH_SECRET
+};
 
 export default NextAuth(authOptions);
+

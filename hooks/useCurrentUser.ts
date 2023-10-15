@@ -1,12 +1,15 @@
 import useSwr from 'swr'
 
-import fetcher from '@/lib/fetcher';
+import fetcher from '@/libs/fetcher';
 
 const useCurrentUser = () => {
-  const response = useSwr('/api/current', fetcher);
-  console.log(`🔓%cuseCurrentUser.ts:7 - response`, 'font-weight:bold; background:#25da00;color:#fff;'); //DELETEME
-  console.log(response); // DELETEME
-  return response
+  const { data, error, isLoading, mutate } = useSwr('/api/current', fetcher);
+  return {
+    data,
+    error,
+    isLoading,
+    mutate,
+  }
 };
 
 export default useCurrentUser;
