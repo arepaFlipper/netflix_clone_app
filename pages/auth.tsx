@@ -31,7 +31,7 @@ const Auth = () => {
       console.log(error);
       alert(error);
     }
-  }, [email, password, name, isLogin])
+  }, [email, password, router])
 
   const register = useCallback(async () => {
     console.log(`🔖%cauth.tsx:19 - { email, name, password}`, 'font-weight:bold; background:#56a900;color:#fff;'); //DELETEME
