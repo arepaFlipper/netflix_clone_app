@@ -5,6 +5,7 @@ import { signIn } from 'next-auth/react';
 import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from 'react-icons/fa';
 import { useRouter } from 'next/router';
+import { errorMonitor } from 'events';
 
 const Auth = () => {
   const router = useRouter();
@@ -25,9 +26,10 @@ const Auth = () => {
     try {
       const response = await signIn('credentials', { email, password, redirect: true, callbackUrl: '/profiles' });
       router.push('/profiles');
-    } catch (error) {
+    } catch (error: unknown) {
       console.log(`⏺️ %cauth.tsx:36 - error`, 'font-weight:bold; background:#807f00;color:#fff;'); 
       console.log(error);
+      alert(error);
     }
   }, [email, password])
 
