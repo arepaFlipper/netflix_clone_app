@@ -57,7 +57,17 @@ export const authOptions: AuthOptions = {
   pages: {
     signIn: '/auth',
   },
-  debug: process.env.NODE_ENV === 'development',
+  callbacks: {
+    async jwt({ token, user, account }) {
+
+      console.log(`⚠️ %c[...nextauth].ts:62 - user`, 'font-weight:bold; background:#a45b00;color:#fff;'); //DELETEME:
+      console.log(user); // DELETEME:
+      console.log(`🔬 %c[...nextauth].ts:64 - token`, 'font-weight:bold; background:#a65900;color:#fff;'); //DELETEME:
+      console.log(token); // DELETEME:
+      return token;
+    }
+  },
+  debug: (process.env.NODE_ENV === 'development'),
   adapter: PrismaAdapter(prismadb),
   session: {
     strategy: 'jwt',

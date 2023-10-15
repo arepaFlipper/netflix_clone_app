@@ -8,6 +8,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     const { currentUser } = await serverAuth(req,);
+    console.log(`🦕%ccurrent.ts:11 - currentUser`, 'font-weight:bold; background:#38c700;color:#fff;'); //DELETEME:
+    console.log(currentUser); // DELETEME:
     return res.status(200).json(currentUser);
   } catch (error) {
     console.log(error);
