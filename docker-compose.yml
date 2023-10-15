@@ -1,0 +1,38 @@
+version: '3.9'
+services:
+  mongo:
+    container_name: mongo
+    restart: always
+    build:
+      context: .
+      # dockerfile: Dockerfile
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    healthcheck:
+      test: test $$(echo "rs.initiate().ok || rs.status().ok" | mongosh -u root -p example --quiet) -eq 1
+      interval: 10s
+      start_period: 30s
+    ports:
+      - 27017-27023:27017-27023
+    # volumes:
+    #   - mongodb_data_container2:/data/db
+    # command: --servicesExecutor adaptive
+    command: ["/usr/bin/mongod", "--bind_ip_all", "--replSet", "dbrs"]
+
+  mongo-express:
+    container_name: mongo_express
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+
+volumes:
+  mongodb_data_container2:
+networks:
+  mongo-network:
+    driver: bridge

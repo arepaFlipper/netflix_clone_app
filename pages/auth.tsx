@@ -1,69 +1,63 @@
-import axios from 'axios';
 import { useCallback, useState } from 'react';
-import { NextPageContext } from 'next';
-import { getSession, signIn } from 'next-auth/react';
-import { useRouter } from 'next/router';
+import axios from 'axios';
+import Input from "@/components/Input";
+import { signIn, getSession } from 'next-auth/react';
 import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from 'react-icons/fa';
+import { useRouter } from 'next/router';
 
-import Input from '@/components/Input';
+import { NextPageContext } from 'next';
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
-
   if (session) {
     return {
       redirect: {
         destination: '/',
         permanent: false,
-      }
+      },
     }
   }
-
   return {
-    props: {}
+    props: {},
   }
 }
 
 const Auth = () => {
   const router = useRouter();
-
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
-
-  const [variant, setVariant] = useState('login');
+  const [isLogin, setIsLogin] = useState(true);
 
   const toggleVariant = useCallback(() => {
-    setVariant((currentVariant) => currentVariant === 'login' ? 'register' : 'login');
-  }, []);
+    setIsLogin((currentVariant) => {
+      return !currentVariant;
+    })
+  }, [])
 
   const login = useCallback(async () => {
+    console.log(`🛠️ %cauth.tsx:32 - email, password`, 'font-weight:bold; background:#788700;color:#fff;'); 
+    console.log(email, password); 
     try {
-      await signIn('credentials', {
-        email,
-        password,
-        redirect: false,
-        callbackUrl: '/'
-      });
-
+      const response = await signIn('credentials', { email, password, redirect: false, callbackUrl: '/' });
       router.push('/profiles');
-    } catch (error) {
+    } catch (error: unknown) {
+      console.log(`⏺️ %cauth.tsx:36 - error`, 'font-weight:bold; background:#807f00;color:#fff;'); 
       console.log(error);
+      alert(error);
     }
-  }, [email, password, router]);
+  }, [email, password, router])
 
   const register = useCallback(async () => {
+    console.log(`🔖%cauth.tsx:19 - { email, name, password}`, 'font-weight:bold; background:#56a900;color:#fff;'); //DELETEME
+    console.log({ email, name, password }); // DELETEME
     try {
-      await axios.post('/api/register', {
-        email,
-        name,
-        password
-      });
-
+      await axios.post('/api/register', { email, name, password });
       login();
     } catch (error) {
-        console.log(error);
+      console.log(`💤%cauth.tsx:22 - error`, 'font-weight:bold; background:#5fa000;color:#fff;'); //DELETEME
+      console.log(error); // DELETEME
     }
   }, [email, name, password, login]);
 
@@ -71,60 +65,48 @@ const Auth = () => {
     <div className="relative h-full w-full bg-[url('/images/hero.jpg')] bg-no-repeat bg-center bg-fixed bg-cover">
       <div className="bg-black w-full h-full lg:bg-opacity-50">
         <nav className="px-12 py-5">
-          <img src="/images/logo.png" className="h-12" alt="Logo" />
+          <img src="/images/metflix-logo.png" alt="Logo" className="h-12" />
         </nav>
         <div className="flex justify-center">
           <div className="bg-black bg-opacity-70 px-16 py-16 self-center mt-2 lg:w-2/5 lg:max-w-md rounded-md w-full">
-            <h2 className="text-white text-4xl mb-8 font-semibold">
-              {variant === 'login' ? 'Sign in' : 'Register'}
+            <h2 className="text-white text-3xl mb-8 font-semibold">
+              {(isLogin) ? 'Login' : 'Sign up'}
             </h2>
             <div className="flex flex-col gap-4">
-              {variant === 'register' && (
-                <Input
-                  id="name"
-                  type="text"
-                  label="Username"
-                  value={name}
-                  onChange={(e: any) => setName(e.target.value)} 
-                />
+              <Input id="email" label={(isLogin) ? "Username or Email" : "Email"} type="email" onChange={(ev: React.BaseSyntheticEvent) => setEmail(ev.target.value)} value={email} />
+              {(!isLogin) && (
+                <Input id="name" label="username" type="text" onChange={(ev: React.BaseSyntheticEvent) => setName(ev.target.value)} value={name} />
               )}
-              <Input
-                id="email"
-                type="email"
-                label="Email address or phone number"
-                value={email}
-                onChange={(e: any) => setEmail(e.target.value)} 
-              />
-              <Input
-                type="password" 
-                id="password" 
-                label="Password" 
-                value={password}
-                onChange={(e: any) => setPassword(e.target.value)} 
-              />
-            </div>
-            <button onClick={variant === 'login' ? login : register} className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition">
-              {variant === 'login' ? 'Login' : 'Sign up'}
-            </button>
-            <div className="flex flex-row items-center gap-4 mt-8 justify-center">
-              <div onClick={() => signIn('google', { callbackUrl: '/profiles' })} className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition">
-                <FcGoogle size={32} />
+              <Input id="password" label="Password" type="password" onChange={(ev: React.BaseSyntheticEvent) => setPassword(ev.target.value)} value={password} />
+              <button onClick={(isLogin) ? (login) : (register)} className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition">{(isLogin) ? 'Login' : 'Sign up'}</button>
+              <div className="flex flex-row items-center gap-4 mt-8 justify-center">
+                <div onClick={() => signIn('github', { callbackUrl: '/profiles' })} className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition">
+                  <FaGithub size={30} />
+                </div>
+                <div onClick={() => signIn('google', { callbackUrl: '/profiles' })} className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition">
+                  <FcGoogle size={30} />
+                </div>
               </div>
-              <div onClick={() => signIn('github', { callbackUrl: '/profiles' })} className="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer hover:opacity-80 transition">
-                <FaGithub size={32} />
-              </div>
+              <p className="text-neutral-500 mt-12">
+                {
+                  (isLogin) ? (
+                    <>
+                      First time visiting my Netflix clone?<br />
+                      <span onClick={toggleVariant} className="text-white ml-1 hover:underline cursor-pointer">Create an account</span>
+                    </>
+                  ) : (
+                    <>
+                      Already have an account?<br />
+                      Sign in <span onClick={toggleVariant} className="text-white ml-1 hover:underline cursor-pointer">HERE</span>
+                    </>
+                  )
+                }
+              </p>
             </div>
-            <p className="text-neutral-500 mt-12">
-              {variant === 'login' ? 'First time using Netflix?' : 'Already have an account?'}
-              <span onClick={toggleVariant} className="text-white ml-1 hover:underline cursor-pointer">
-                {variant === 'login' ? 'Create an account' : 'Login'}
-              </span>
-              .
-            </p>
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 }
 

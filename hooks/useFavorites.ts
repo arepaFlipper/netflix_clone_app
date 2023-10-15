@@ -1,18 +1,10 @@
-import useSwr from 'swr'
-import fetcher from '@/libs/fetcher';
+import useSWR from 'swr';
+import fetcher from '@/lib/fetcher';
 
-const useMovies = () => {
-  const { data, error, isLoading, mutate } = useSwr('/api/favorites', fetcher, {
-    revalidateIfStale: false,
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-  });
-  return {
-    data,
-    error,
-    isLoading,
-    mutate
-  }
-};
+const useFavorites = () => {
+  const options = { revalidateIfStale: false, revalidateOnFocus: false, revalidateOnReconnect: false };
+  const { data, error, isLoading, mutate } = useSWR('/api/favorites', fetcher, options);
+  return { data, error, isLoading, mutate };
+}
 
-export default useMovies;
+export default useFavorites;
