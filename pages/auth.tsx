@@ -24,14 +24,14 @@ const Auth = () => {
     console.log(`🛠️ %cauth.tsx:32 - email, password`, 'font-weight:bold; background:#788700;color:#fff;'); 
     console.log(email, password); 
     try {
-      const response = await signIn('credentials', { email, password, redirect: true, callbackUrl: '/profiles' });
+      const response = await signIn('credentials', { email, password, redirect: false, callbackUrl: '/' });
       router.push('/profiles');
     } catch (error: unknown) {
       console.log(`⏺️ %cauth.tsx:36 - error`, 'font-weight:bold; background:#807f00;color:#fff;'); 
       console.log(error);
       alert(error);
     }
-  }, [email, password])
+  }, [email, password, name, isLogin])
 
   const register = useCallback(async () => {
     console.log(`🔖%cauth.tsx:19 - { email, name, password}`, 'font-weight:bold; background:#56a900;color:#fff;'); //DELETEME
