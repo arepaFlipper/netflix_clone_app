@@ -6,6 +6,8 @@ import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 
+export const maxDuration = 10;
+
 export const authOptions: AuthOptions = {
   providers: [
     GithubProvider({
@@ -66,10 +68,6 @@ export const authOptions: AuthOptions = {
   callbacks: {
     async jwt({ token, user, account }) {
 
-      console.log(`⚠️ %c[...nextauth].ts:62 - user`, 'font-weight:bold; background:#a45b00;color:#fff;'); //DELETEME:
-      console.log(user); // DELETEME:
-      console.log(`🔬 %c[...nextauth].ts:64 - token`, 'font-weight:bold; background:#a65900;color:#fff;'); //DELETEME:
-      console.log(token); // DELETEME:
       return token;
     }
   },
