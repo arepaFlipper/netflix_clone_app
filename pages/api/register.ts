@@ -9,8 +9,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     const { email, name, password } = req.body;
-    console.log(`🆚%cregister.ts:12 - req.body`, 'font-weight:bold; background:#3cc300;color:#fff;'); //DELETEME
-    console.log(req.body); // DELETEME
     const queryset = { where: { email } }
 
     const existingUser = await prismadb.user.findUnique(queryset);
@@ -25,8 +23,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     return res.status(200).json(user);
   } catch (error) {
-    console.log(`🚆%cregister.ts:26 - error`, 'font-weight:bold; background:#6a9500;color:#fff;'); //DELETEME
-    console.log(error); // DELETEME
     return res.status(400).end()
   }
 }

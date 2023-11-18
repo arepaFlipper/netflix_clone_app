@@ -27,8 +27,6 @@ export default function Home() {
   const { data: movies = [] } = useMovieList();
   const { data: favorites = [] } = useFavorites();
   const { isOpen, onClose } = useInfoModal();
-  console.log(`🚁%cindex.tsx:27 - favorites`, 'font-weight:bold; background:#6c9300;color:#fff;'); //DELETEME
-  console.log(favorites); // DELETEME
   return (
     <>
       <InfoModal visible={isOpen} onClose={onClose} />

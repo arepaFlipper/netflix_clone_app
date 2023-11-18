@@ -50,14 +50,10 @@ const Auth = () => {
   }, [email, password, router])
 
   const register = useCallback(async () => {
-    console.log(`🔖%cauth.tsx:19 - { email, name, password}`, 'font-weight:bold; background:#56a900;color:#fff;'); //DELETEME
-    console.log({ email, name, password }); // DELETEME
     try {
       await axios.post('/api/register', { email, name, password });
       login();
     } catch (error) {
-      console.log(`💤%cauth.tsx:22 - error`, 'font-weight:bold; background:#5fa000;color:#fff;'); //DELETEME
-      console.log(error); // DELETEME
     }
   }, [email, name, password, login]);
 

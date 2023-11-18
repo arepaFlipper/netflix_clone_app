@@ -6,8 +6,6 @@ import useInfoModal from '@/hooks/useInfoModal';
 
 const Billboard = () => {
   const { data } = useBillboard();
-  console.log(`🪬%cBillboard.tsx:6 - data`, 'font-weight:bold; background:#20df00;color:#fff;'); //DELETEME
-  console.log(data); // DELETEME
   const { openModal } = useInfoModal();
 
   const handleOpenModal = useCallback(() => {

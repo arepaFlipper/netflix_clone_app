@@ -33,8 +33,6 @@ const Navbar = () => {
     setShowAccountMenu((current) => !current);
   }, [])
   useEffect(() => {
-    console.log(`🤔%cNavbar.tsx:19 - showMobileMenu`, 'font-weight:bold; background:#56a900;color:#fff;'); //DELETEME
-    console.log(showMobileMenu); // DELETEME
   }, [showMobileMenu])
 
   const labels = ["Home", "Series", "Films", "New & Popular", "My List", "Browse by Language"];

@@ -24,8 +24,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     return res.status(200).json(movie);
   } catch (error) {
-    console.log(`🦁%c[movieId].ts:27 - error`, 'font-weight:bold; background:#6c9300;color:#fff;'); //DELETEME
-    console.log(error); // DELETEME
     return res.status(400).end();
   }
 
